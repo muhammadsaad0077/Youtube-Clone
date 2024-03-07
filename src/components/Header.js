@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { Suggestion_API_Key } from "../utils/constants";
 import { cacheResults } from "../utils/searchSlice";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [search, setSearch] = useState("");
@@ -15,7 +16,7 @@ const Header = () => {
       if(searchCache[search]){
         setShowSuggestion(searchCache[search])
       } else{
-        getSearchSuggestion()
+       getSearchSuggestion()
       }
       }, 200);
     return () => {
@@ -47,10 +48,22 @@ const Header = () => {
   re-render the component
   useEffect
   start timer => make api call after 200ms
+*/
+  const handleSearch = () => {
+    // Clear search input after navigation
+    setSearch("");
+  };
+  
+  /*const searchVideos = async()=>{
+    const data = await fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=${search}&key=AIzaSyCGpI5cbnWkgFH2NpPpvfq7ZWRFBsr9q0M&`)
+   const json = await data.json()
+   console.log(json);
+  }
 
-  
-  
-  */
+  useEffect(()=>{
+   searchVideos()
+  }, )*/
+
 
   const getSearchSuggestion = async () => {
     const data = await fetch(Suggestion_API_Key + search);
@@ -59,58 +72,70 @@ const Header = () => {
 
   // update cache
   dispatch(cacheResults({
-    [search]: json[1]
+  //  [search]: json[1]
   }))
   };
   const toggleMenuBar = () => {
     dispatch(toggleMenu());
   };
-  return (
+  
+return (
+   
     <div className="grid grid-flow-col p-2 m-2">
-      <div className="flex col-span-5">
+      <div className="flex col-span-4">
         <img
-          className="h-5 cursor-pointer mt-2 ml-4"
+          className="hidden md:inline-block md:h-5 md:cursor-pointer md:mt-2 md:ml-4 md:fixed"
           src="https://cdn.icon-icons.com/icons2/2596/PNG/512/hamburger_button_menu_icon_155296.png"
           alt="menu"
-          onClick={toggleMenuBar}
+          //onClick={toggleMenuBar}
         ></img>
         <img
-          className="h-5 mx-4 mt-2"
+          className="md:h-5 md:mx-14 md:mt-2 md:fixed h-4 mx-1 mt-2"
           src="https://vectorseek.com/wp-content/uploads/2021/01/YouTube-Logo-Vector.png"
           alt="logo"
         ></img>
       </div>
       <div className="col-span-6 px-14">
-        <div>
+        <div className="flex justify-center md:block">
           <input
+          onClick={()=> setShowSuggestion(false)}
             value={search}
-            onFocus={() => setShowSuggestion(true)}
-            onBlur={() => setShowSuggestion(false)}
+            //onFocus={() => setShowSuggestion(true)}
+           // onBlur={() => setShowSuggestion(false)}
             onChange={(e) => {
               setShowSuggestion(true);
               setSearch(e.target.value);
             }}
             placeholder="Search"
             type="text"
-            className="w-1/2 border border-gray-400 p-2 rounded-l-full"
+            className="w-8/12 md:w-1/2 border border-gray-400 p-2 rounded-l-full md:mx-0 mx-12"
           ></input>
-          <button className="border border-gray-400 p-2 rounded-r-full text-white bg-gray-200">
-            🔍
-          </button>
+          <Link
+           to={"/searchresult?_q=" + search}
+           
+           onClick={handleSearch} // Handle search button click
+           className="border border-gray-400 p-2 rounded-r-full text-white bg-gray-200 md:-mx-0 -mx-12"
+         >
+           🔍
+         </Link>
+          
         </div>
-        {showSuggestion && (
-          <div className="fixed bg-white py-2 px-5 w-96 shadow-lg rounded-lg border-gray-100">
-            <ul>
-              {suggestion.map((suggest) => (
-                <li key={suggest} className="py-2 px-3 hover:bg-gray-100">
-                  {suggest}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        { showSuggestion && (
+        <div className="bg-white py-2 px-5 w-96 shadow-lg rounded-lg border-gray-100 absolute">
+          <ul>
+            {suggestion.map((suggest) => (
+              <li key={suggest} className="py-2 px-3 cursor-pointer hover:bg-gray-100">
+                <Link to={"/searchresult?_q=" + encodeURIComponent(suggest)}>{suggest}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+  )}
+
+        
+        
       </div>
-      <div className="col-span-1">
+      <div className="col-span-2">
         <img
           className="h-5"
           src="https://static.vecteezy.com/system/resources/previews/019/879/186/original/user-icon-on-transparent-background-free-png.png"

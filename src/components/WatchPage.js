@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { menuClosed } from "../utils/appSlice";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import CommentsContainer from "./CommentsContainer";
 import LiveChat from "./LiveChat";
 
@@ -20,12 +20,10 @@ const WatchPage = () => {
 
   return (
     <div className="flex flex-col">
-    <div className="px-24 pt-8 flex ">
+    <div className="md:px-24 px-0 pt-8 flex ">
       <div className="">
       <iframe
-      className="rounded-lg"
-        width="900"
-        height="450"
+      className="rounded-lg md:h-[450px] md:w-[900px] w-screen h-[220px]"
         src={"https://www.youtube.com/embed/" + searchParams.get("v")}
         title="YouTube video player"
         frameBorder="0"

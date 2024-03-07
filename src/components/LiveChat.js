@@ -25,13 +25,13 @@ const LiveChat = () => {
     <>
     
     
-    <div className="ml-2 w-[145%] h-[450px] p-2 bg-slate-100 rounded-lg overflow-y-scroll flex flex-col-reverse">
+    <div className="md:ml-2 md:w-[145%] md:h-[450px] md:p-2 md:bg-slate-100 md:rounded-lg md:overflow-y-scroll md:flex md:flex-col-reverse hidden md:inline-block">
       <div>{chatMesagages.map((data, index)=> (
         <ChatMessage key={index} name={data.name} message={data.message}/>
       ))}
       </div>
       </div>
-      <form onSubmit={(e)=>{e.preventDefault();
+      <form className="hidden md:inline-block" onSubmit={(e)=>{e.preventDefault();
     dispatch(addMessages({
         name: "Saad",
         message: liveMessage

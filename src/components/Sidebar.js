@@ -7,7 +7,8 @@ const Sidebar = () => {
 
   if(!isMenuOpen) return null;
   return (
-    <div className="p-5 w-[13%] fixed">
+    
+    <div className="md:p-5 md:w-[13%] md:fixed md:inline-block hidden">
         <ul>
             <li className="pt-3 pl-10">Home</li>
             <li className="pt-3 pl-10">Shorts</li>
@@ -30,6 +31,7 @@ const Sidebar = () => {
         </ul>
       
     </div>
+    
   )
 }
 
