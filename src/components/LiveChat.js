@@ -15,7 +15,7 @@ const LiveChat = () => {
         console.log("API Polling");
         dispatch(addMessages({
             name: generateName(),
-            message: randomMessage(20)
+            message: randomMessage(21)
         }))
         }, 1500);
 
@@ -25,13 +25,13 @@ const LiveChat = () => {
     <>
     
     
-    <div className="md:ml-2 md:w-[145%] md:h-[450px] md:p-2 md:bg-slate-100 md:rounded-lg md:overflow-y-scroll md:flex md:flex-col-reverse hidden md:inline-block">
+    <div className="relative right-[415px] md:right-0 top-56 md:top-0 md:ml-2 w-[145%] h-[450px] p-2 bg-slate-100 rounded-lg overflow-y-scroll flex flex-col-reverse ">
       <div>{chatMesagages.map((data, index)=> (
         <ChatMessage key={index} name={data.name} message={data.message}/>
       ))}
       </div>
       </div>
-      <form className="hidden md:inline-block" onSubmit={(e)=>{e.preventDefault();
+      <form className="relative top-56 md:top-0 right-[410px] md:right-0" onSubmit={(e)=>{e.preventDefault();
     dispatch(addMessages({
         name: "Saad",
         message: liveMessage

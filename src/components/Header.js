@@ -11,6 +11,8 @@ const Header = () => {
   const [showSuggestion, setShowSuggestion] = useState(false);
   const searchCache = useSelector(store => store.search)
   const dispatch = useDispatch();
+ 
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if(searchCache[search]){
@@ -78,6 +80,7 @@ const Header = () => {
   const toggleMenuBar = () => {
     dispatch(toggleMenu());
   };
+
   
 return (
    
@@ -87,16 +90,16 @@ return (
           className="hidden md:inline-block md:h-5 md:cursor-pointer md:mt-2 md:ml-4 md:fixed"
           src="https://cdn.icon-icons.com/icons2/2596/PNG/512/hamburger_button_menu_icon_155296.png"
           alt="menu"
-          //onClick={toggleMenuBar}
+          onClick={toggleMenuBar}
         ></img>
-        <img
-          className="md:h-5 md:mx-14 md:mt-2 md:fixed h-4 mx-1 mt-2"
+        <Link to="/"><img
+          className="md:h-5 md:mx-14 md:mt-2 md:fixed h-6 mx-1 mt-2"
           src="https://vectorseek.com/wp-content/uploads/2021/01/YouTube-Logo-Vector.png"
           alt="logo"
-        ></img>
+        ></img></Link>
       </div>
       <div className="col-span-6 px-14">
-        <div className="flex justify-center md:block">
+        <div className="flex justify-center md:block" >
           <input
           onClick={()=> setShowSuggestion(false)}
             value={search}
@@ -106,22 +109,23 @@ return (
               setShowSuggestion(true);
               setSearch(e.target.value);
             }}
+            id="searchInput"
             placeholder="Search"
             type="text"
-            className="w-8/12 md:w-1/2 border border-gray-400 p-2 rounded-l-full md:mx-0 mx-12"
+            className="w-11/12 md:w-1/2 border border-gray-400 p-2 md:rounded-l-full rounded-lg md:px-0 px-4"
           ></input>
+          
           <Link
            to={"/searchresult?_q=" + search}
-           
-           onClick={handleSearch} // Handle search button click
-           className="border border-gray-400 p-2 rounded-r-full text-white bg-gray-200 md:-mx-0 -mx-12"
+           // Handle search button click
+           className="md:border md:border-gray-400 p-2 rounded-r-full text-white md:bg-gray-200 hidden md:inline-block"
          >
-           🔍
+           &#128269;
          </Link>
           
         </div>
         { showSuggestion && (
-        <div className="bg-white py-2 px-5 w-96 shadow-lg rounded-lg border-gray-100 absolute">
+        <div className="bg-white py-2 px-5 w-48 md:w-96 shadow-lg rounded-lg border-gray-100 absolute">
           <ul>
             {suggestion.map((suggest) => (
               <li key={suggest} className="py-2 px-3 cursor-pointer hover:bg-gray-100">
@@ -137,7 +141,7 @@ return (
       </div>
       <div className="col-span-2">
         <img
-          className="h-5"
+          className="md:h-5 hidden md:inline-block"
           src="https://static.vecteezy.com/system/resources/previews/019/879/186/original/user-icon-on-transparent-background-free-png.png"
           alt="user-icon"
         ></img>

@@ -22,7 +22,7 @@ const VideoPage = () => {
 
   useEffect(()=>{
     searchVideos(searchTerm)
-  }, [])
+  }, [searchTerm])
 
   
 
@@ -33,7 +33,7 @@ const VideoPage = () => {
       <ButtonList />
       </div>
       {pageClose && (
-        <div>
+        <div className='overflow-x-hidden'>
          {videos.map((videos) => (
           <Link key={videos?.id?.videoId} to={"/watch?v=" + videos?.id?.videoId}>
           <PageCard key={videos?.id?.videoId} info={videos}/>
